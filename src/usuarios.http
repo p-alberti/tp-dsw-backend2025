@@ -1,0 +1,49 @@
+### Obtener todos los Usuarios
+GET http://localhost:3000/api/usuarios
+
+
+### Obtener un Usuario
+GET http://localhost:3000/api/usuarios/733b6b1c-0197-49d9-82ae-eb2c2f2a8a54
+
+
+### Crear un nuevo Usuario
+POST http://localhost:3000/api/usuarios
+Content-Type: application/json
+
+{
+  "nombre": "Moraine",
+  "apellido": "Damodred",
+  "dni": 20896478,
+  "fechaNac": "1979-01-27T00:00:00.000Z",
+  "username": "Moraine Sedai",
+  "contraseña": "iSwearToSpeakNoWordThatIsNotTrue",
+  "mail": "morainedam@gmail.com"
+}
+
+### modificar un Usuario (modifico el recurso completo e idempotente)
+PUT http://localhost:3000/api/usuarios/733b6b1c-0197-49d9-82ae-eb2c2f2a8a54
+Content-Type: application/json
+
+{
+  "nombre": "Rosamund",
+  "apellido": "Pike",
+  "dni": 20896478,
+  "fechaNac": "1979-01-27T00:00:00.000Z",
+  "username": "Moraine Sedai",
+  "contraseña": "iSwearToSpeakNoWordThatIsNotTrue",
+  "mail": "rosamundpikem@gmail.com"
+}
+
+### modificar un Usuario (modifico el recurso parcialmente)
+PATCH  http://localhost:3000/api/usuarios/733b6b1c-0197-49d9-82ae-eb2c2f2a8a54
+Content-Type: application/json
+
+{
+  "nombre": "Rosamund",
+  "fechaNac": "1979-01-27T00:00:00.000Z",
+  "username": "Rosamund Sedai",
+  "contraseña": "iSwearToSpeakNoWordThatIsNotTrue"
+}
+
+### borrar un Usuario
+DELETE  http://localhost:3000/api/usuarios/733b6b1c-0197-49d9-82ae-eb2c2f2a8a54
