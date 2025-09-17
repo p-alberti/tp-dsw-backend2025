@@ -1,8 +1,8 @@
 import { Request, Response, NextFunction } from "express"
-import { UsuarioRepositorio } from "./usuarios.repository.js"
+//import { UsuarioRepositorio } from "./usuarios.repository.js"
 import { Usuario } from "./usuarios.entity.js"
 
-const repository = new UsuarioRepositorio()
+//const repository = new UsuarioRepositorio()
 
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
 
@@ -23,57 +23,25 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
     next()
 }
 
-function findAll(req: Request,res: Response){
-    res.json({data: repository.findAll()}) 
+async function findAll(req: Request,res: Response){
+    res.status(500).json({message: 'Not implemented'})
 }
 
-function findOne(req: Request,res:Response) {
-    const id = req.params.id
-    const user = repository.findOne({id})
-    if (!user) {
-        return res.status(404).send({message: 'User not found'})
-    }
-    res.json(user)
+async function findOne(req: Request,res:Response) {
+    res.status(500).json({message: 'Not implemented'})
 }
 
 
-function add(req: Request,res:Response){
-    const input = req.body.sanitizedInput
-
-    const userInput = new Usuario(
-        input.nombre, 
-        input.apellido, 
-        input.dni,
-        input.fechaNac,
-        input.username ,
-        input.contraseña, 
-        input.mail,
-        []
-    )
-
-    const user = repository.add(userInput)
-    return res.status(201).send({message:'Character created', data:user})
+async function add(req: Request,res:Response){
+    res.status(500).json({message: 'Not implemented'})
 }
 
-function update(req: Request,res:Response){
-    req.body.sanitizedInput.id = req.params.id
-    const user = repository.update(req.body.sanitizedInput)
-   
-    if(!user){
-        return res.status(404).send({message: 'User not found'})
-    }
-    return res.status(200).send({message: 'User updated successfully', data: user})
+async function update(req: Request,res:Response){
+    res.status(500).json({message: 'Not implemented'})
 }
 
-function remove(req: Request,res:Response) {
-    const id = req.params.id
-    const user = repository.delete({id})
-    
-    if(!user){
-        res.status(404).send({message: 'User not found'})
-    }else{    
-        res.status(200).send({message: 'User deleted successfully'})
-    }
+async function remove(req: Request,res:Response) {
+    res.status(500).json({message: 'Not implemented'})
 }
 
 export {sanitizeUserInput, findAll, findOne, add, update, remove}
