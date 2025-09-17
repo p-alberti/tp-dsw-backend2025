@@ -16,6 +16,12 @@ app.use((req, res, next) => {
 
 //antes de las rutas y middlewares de negocio
 
+//luego de los middlewares base
+app.use((req, res, next) => {
+    RequestContext.create(orm.em, next)
+})
+//antes de las rutas y middlewares de negocio
+
 app.use('/api/users', usuarioRouter)
 app.use('/api/sessions', sesionRouter)
 app.use('/api/sessionTypes', tipoSesionRouter)
@@ -24,8 +30,12 @@ app.use((_, res)=>{
     return res.status(404).send({message: 'Resource Not Found'})
 }) //Para manejar urls que no tenemos definidas como por ejemplo si se equivocan en algun caracter del getall ej: /api/usersss
 
+<<<<<<< HEAD
 
 await syncSchema()// nunca en producción
+=======
+await syncSchema() // never in production
+>>>>>>> origin/main
 
 app.listen(3000,() => {
     console.log('Server running on http://localhost:3000/')
