@@ -6,10 +6,10 @@ const repository = new TipoSesionRepositorio()
 
 function sanitizeSessionTypeInput(req: Request, res: Response, next: NextFunction){
     req.body.sanitizedInput = {
-        nombreTipo : req.body.typeName,
-        tiempoFoco : req.body.focusTime,
-        recreoCorto : req.body.shortBreak,
-        recreoLargo : req.body.longBreak
+        nombreTipo : req.body.nombreTipo,
+        tiempoFoco : req.body.tiempoFoco,
+        recreoCorto : req.body.recreoCorto,
+        recreoLargo : req.body.recreoLargo
     }
     Object.keys(req.body.sanitizedInput).forEach(key => {
         if(req.body.sanitizedInput[key] === undefined){
@@ -43,6 +43,11 @@ function add(req: Request, res: Response){
     )
 
     const sessionType = repository.add(sessionTypeInput)
+
+    console.log("INPUT:", input)
+    console.log("CREATED:", sessionTypeInput)
+    console.log("STORED:", sessionType)
+
     return res.status(201).send({message: 'Session Type created succesfully', data:sessionType})
 }
 

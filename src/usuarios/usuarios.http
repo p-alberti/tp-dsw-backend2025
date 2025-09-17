@@ -15,7 +15,7 @@ Content-Type: application/json
     "fechaNac": "1979-01-27T00:00:00.000Z",
     "username": "lucasramirez",
     "contraseña":"67891",
-    "mail":"lucasramirez@gmail.com",
+    "mail":"lucasramirez@gmail.com"
 }
 
 ### MODIFICAR un user
@@ -29,7 +29,7 @@ Content-Type: application/json
     "fechaNac": "1974-05-15T00:00:00.000Z",
     "username": "anagomez",
     "contraseña":"46595",
-    "mail":"anabellegomez@gmail.com",
+    "mail":"anabellegomez@gmail.com"
 }
 
 ### MODIFICAR un nuevo user parcial

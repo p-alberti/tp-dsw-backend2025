@@ -8,9 +8,9 @@ const sessions = [
        new Date("2024-09-28"),
         new TipoSesion(   
             'Pomodoro 1',
-            new Date('2024-10-04T${hora}:00'),
-            new Date('2024-10-04T${hora}:00'),
-            new Date('2024-10-04T${hora}:00')
+            25,
+            5,
+            15
         ),
        'a02b26bc-3769-4221-beb1-d7a3cfh7dad' 
     ),

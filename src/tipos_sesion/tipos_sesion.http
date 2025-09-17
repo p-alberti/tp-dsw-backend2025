@@ -10,9 +10,9 @@ Content-Type: application/json
 
 {
     "nombreTipo" : "Pomodoro 2",
-    "tiempoFoco": "2024-10-05T16:50:00",
-    "recreoCorto": "2024-10-05T00:15:00",
-    "recreoLargo": "2024-10-05T00:30:00"
+    "tiempoFoco": 50,
+    "recreoCorto": 10,
+    "recreoLargo": 30
 }
 
 ### MODIFICAR una session
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
     "nombreTipo" : "Pomodoro 1.1",
-    "tiempoFoco": "2024-10-05T19:50:00"
+    "tiempoFoco": 60
 }
 
 ### MODIFICAR una session parcialmente

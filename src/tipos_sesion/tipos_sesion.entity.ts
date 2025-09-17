@@ -3,9 +3,9 @@ import crypto from 'node:crypto'
 export class TipoSesion{
     constructor(
         public nombreTipo: string,
-        public tiempoFoco: Date,
-        public recreoCorto: Date,
-        public recreoLargo: Date,
+        public tiempoFoco: number,
+        public recreoCorto: number,
+        public recreoLargo: number,
         public id = crypto.randomUUID()
     ){}
 }

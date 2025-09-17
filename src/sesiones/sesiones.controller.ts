@@ -41,9 +41,9 @@ function add(req: Request, res: Response){
         input.fecha,
         new TipoSesion(   
             'Pomodoro 1',
-            new Date('2024-10-04T${hora}:00'),
-            new Date('2024-10-04T${hora}:00'),
-            new Date('2024-10-04T${hora}:00')
+            25,
+            5,
+            10
         ),
     )
 

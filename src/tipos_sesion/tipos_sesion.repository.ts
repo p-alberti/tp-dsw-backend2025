@@ -4,9 +4,9 @@ import { TipoSesion } from "./tipos_sesion.entity.js";
 const sessionTypes = [
     new TipoSesion(
         'Pomodoro 1',
-        new Date('2024-10-04T14:30:00'),
-        new Date('2024-10-04T14:30:00'),
-        new Date('2024-10-04T14:30:00'),
+        25,
+        5,
+        20,
         '3301d471-92e6-4fb5-886f-e98c24251f61'
     ),
 ]
