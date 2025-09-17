@@ -1,17 +1,33 @@
-import crypto from 'node:crypto'
+
+import  {Entity, OneToMany, PrimaryKey, Property, Cascade, Collection, BaseEntity} from '@mikro-orm/core'
 import { Sesion } from '../sesiones/sesiones.entity.js'
 
-export class Usuario{
-    constructor(
-        public nombre: string,
-        public apellido: string,
-        public dni:number,
-        public fechaNac: Date,
-        public username: string,
-        public contraseña: string,
-        public mail: string,
-        public sesiones?: Sesion[],
-        public id = crypto.randomUUID()
-        //public tasks: task[], el usurio conoce sus tareas, se crearan mas adelante
-    ){}
+@Entity()
+export class Usuario extends BaseEntity{
+    @Property({nullable: false})
+    nombre!: string
+
+    @Property({nullable: false})
+    apellido!: string
+
+    @Property({unique: true})
+    dni?:number
+
+    @Property({nullable: false})
+    fechaNac!: Date
+
+    @Property({nullable: false, unique: true})
+    username!: string
+
+    @Property({nullable: false})
+    contraseña!: string
+
+    @Property({nullable: false, unique: true})
+    mail!: string
+
+    @OneToMany(() => Sesion, (sesion) => sesion.usuario, {
+    cascade: [Cascade.ALL],
+    })
+    sesiones = new Collection<Sesion>(this)
+    //public tasks: task[], el usurio conoce sus tareas, se crearan mas adelante
 }

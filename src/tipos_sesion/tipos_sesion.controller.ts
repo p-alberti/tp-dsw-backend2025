@@ -1,8 +1,8 @@
 import {Request, Response, NextFunction} from "express"
-import { TipoSesionRepositorio } from "./tipos_sesion.repository.js"
+//import { TipoSesionRepositorio } from "./tipos_sesion.repository.js"
 import { TipoSesion } from "./tipos_sesion.entity.js"
 
-const repository = new TipoSesionRepositorio()
+//const repository = new TipoSesionRepositorio()
 
 function sanitizeSessionTypeInput(req: Request, res: Response, next: NextFunction){
     req.body.sanitizedInput = {
@@ -19,57 +19,24 @@ function sanitizeSessionTypeInput(req: Request, res: Response, next: NextFunctio
     next()
 }
 
-function findAll(req: Request, res: Response){
-    res.json({data: repository.findAll()})
+async function findAll(req: Request, res: Response){
+    res.status(500).json({message: 'Not Implemented'})
 }
 
-function findOne(req:Request, res:Response){
-    const id = req.params.id
-    const sessionType = repository.findOne({id})
-    if(!sessionType) {
-        return res.status(404).send({message: 'Session Type not found'})
-    }
-    res.json(sessionType)
+async function findOne(req:Request, res:Response){
+    res.status(500).json({message: 'Not Implemented'})
 }
 
-function add(req: Request, res: Response){
-    const input = req.body.sanitizedInput
-
-    const sessionTypeInput = new TipoSesion (
-        input.nombreTipo, 
-        input.tiempoFoco,
-        input.recreoCorto,
-        input.recreoLargo
-    )
-
-    const sessionType = repository.add(sessionTypeInput)
-
-    console.log("INPUT:", input)
-    console.log("CREATED:", sessionTypeInput)
-    console.log("STORED:", sessionType)
-
-    return res.status(201).send({message: 'Session Type created succesfully', data:sessionType})
+async function add(req: Request, res: Response){
+    res.status(500).json({message: 'Not Implemented'})
 }
 
-function update(req: Request, res:Response){
-    req.body.sanitizedInput.id = req.params.id
-    const sessionType = repository.update(req.body.sanitizedInput)
-
-    if(!sessionType){
-        return res.status(404).send({message: 'Session Type not found'})
-    }
-    return res.status(200).send({message: 'Session Type updated succesfully', data:sessionType})
+async function update(req: Request, res:Response){
+    res.status(500).json({message: 'Not Implemented'})
 }
 
-function remove(req: Request, res:Response){
-    const id = req.params.id
-    const sessionType = repository.delete({id})
-
-    if(!sessionType){
-        res.status(404).send({message: 'Session Type not found'})
-    }else{
-        res.status(200).send({message: 'Session Type removed succesfully'})
-    }
+async function remove(req: Request, res:Response){
+    res.status(500).json({message: 'Not Implemented'})
 }
 
 export {sanitizeSessionTypeInput, findAll, findOne, add, update, remove}
