@@ -1,6 +1,6 @@
-
-import  {Entity, OneToMany, Property, Cascade, Collection, BaseEntity, PrimaryKey} from '@mikro-orm/core'
-import { Sesion } from '../sesiones/sesiones.entity'
+import  {Entity, OneToMany, Property, Cascade, Collection, PrimaryKey} from '@mikro-orm/core'
+import { Sesion } from '../sesiones/sesiones.entity.js'
+import { BaseEntity } from '../shared/db/baseEntity.entity.js'
 
 @Entity()
 export class TipoSesion extends BaseEntity{
@@ -16,7 +16,7 @@ export class TipoSesion extends BaseEntity{
     @Property({nullable: false})
     recreoLargo!: number
 
-    @OneToMany(() => Sesion, (sesion) => sesion.usuario, {
+    @OneToMany(() => Sesion, (sesion) => sesion.tipo, {
     cascade: [Cascade.ALL],
     })
     sesiones = new Collection<Sesion>(this)

@@ -1,5 +1,6 @@
-import { BaseEntity, Cascade, Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core'
+import { Cascade, Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core'
 import { Sesion } from '../sesiones/sesiones.entity.js'
+import { BaseEntity } from '../shared/db/baseEntity.entity.js'
 
 @Entity()
 export class Usuario extends BaseEntity{
