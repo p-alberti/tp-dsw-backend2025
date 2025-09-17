@@ -1,0 +1,34 @@
+### obtener todos las session
+GET http://localhost:3000/api/sessions
+
+### obtener una session
+GET http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad
+
+### CREAR una nueva session
+POST http://localhost:3000/api/sessions
+Content-Type: application/json
+
+{
+ "descripcion": "Nueva session de prueba",
+ "fecha": "2024-10-04"
+}
+
+### MODIFICAR una session
+PUT http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad
+Content-Type: application/json
+
+{
+ "descripcion": "Nueva session de prueba modificada",
+ "fecha": "2024-10-05"
+}
+
+### MODIFICAR una session parcialmente
+PATCH  http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad 
+Content-Type: application/json
+
+{
+ "descripcion": "Nueva session de prueba modificada por patch"
+}
+
+### ELIMINAR un user 
+DELETE http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad

@@ -1,0 +1,45 @@
+### obtener todos los users
+GET http://localhost:3000/api/users
+
+### obtener un user
+GET http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+
+### CREAR un nuevo user
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "nombre": "Lucas",
+    "apellido": "Ramirez",
+    "dni": 42589642,
+    "fechaNac": "1979-01-27T00:00:00.000Z",
+    "username": "lucasramirez",
+    "contraseña":"67891",
+    "mail":"lucasramirez@gmail.com",
+}
+
+### MODIFICAR un user
+PUT http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+    "nombre": "Anabelle",
+    "apellido": "Gomez",
+    "dni": 36548112,
+    "fechaNac": "1974-05-15T00:00:00.000Z",
+    "username": "anagomez",
+    "contraseña":"46595",
+    "mail":"anabellegomez@gmail.com",
+}
+
+### MODIFICAR un nuevo user parcial
+PATCH  http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+Content-Type: application/json
+
+{
+    "username":"anabellegomez",
+    "mail":"anagomez@hotmail.com"
+}
+
+### ELIMINAR un user 
+DELETE http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad

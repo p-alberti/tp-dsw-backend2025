@@ -1,0 +1,36 @@
+### obtener todos las session types
+GET http://localhost:3000/api/sessionTypes
+
+### obtener una session
+GET http://localhost:3000/api/sessionTypes/3301d471-92e6-4fb5-886f-e98c24251f61
+
+### CREAR una nueva session
+POST http://localhost:3000/api/sessionTypes
+Content-Type: application/json
+
+{
+    "nombreTipo" : "Pomodoro 2",
+    "tiempoFoco": "2024-10-05T16:50:00",
+    "recreoCorto": "2024-10-05T00:15:00",
+    "recreoLargo": "2024-10-05T00:30:00"
+}
+
+### MODIFICAR una session
+PUT http://localhost:3000/api/sessionTypes/3301d471-92e6-4fb5-886f-e98c24251f61
+Content-Type: application/json
+
+{
+    "nombreTipo" : "Pomodoro 1.1",
+    "tiempoFoco": "2024-10-05T19:50:00"
+}
+
+### MODIFICAR una session parcialmente
+PATCH  http://localhost:3000/api/sessionTypes/3301d471-92e6-4fb5-886f-e98c24251f61 
+Content-Type: application/json
+
+{
+    "nombreTipo" : "Not Pomodoro"
+}
+
+### ELIMINAR un user 
+DELETE http://localhost:3000/api/sessionTypes/3301d471-92e6-4fb5-886f-e98c24251f61
