@@ -24,26 +24,6 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
 }
 
 async function findAll(req: Request,res: Response){
-<<<<<<< HEAD
-    res.status(500).json({message: 'Not Implemented'}) 
-}
-
-async function findOne(req: Request,res:Response) {
-    res.status(500).json({message: 'Not Implemented'})
-}
- 
-
-async function add(req: Request,res:Response){
-    res.status(500).json({message: 'Not Implemented'})
-}
-
-async function update(req: Request,res:Response){
-    res.status(500).json({message: 'Not Implemented'})
-}
-
-async function remove(req: Request,res:Response) {
-    res.status(500).json({message: 'Not Implemented'})
-=======
     res.status(500).json({message: 'Not implemented'})
 }
 
@@ -62,7 +42,6 @@ async function update(req: Request,res:Response){
 
 async function remove(req: Request,res:Response) {
     res.status(500).json({message: 'Not implemented'})
->>>>>>> origin/main
 }
 
 export {sanitizeUserInput, findAll, findOne, add, update, remove}

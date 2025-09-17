@@ -30,12 +30,7 @@ app.use((_, res)=>{
     return res.status(404).send({message: 'Resource Not Found'})
 }) //Para manejar urls que no tenemos definidas como por ejemplo si se equivocan en algun caracter del getall ej: /api/usersss
 
-<<<<<<< HEAD
-
-await syncSchema()// nunca en producción
-=======
 await syncSchema() // never in production
->>>>>>> origin/main
 
 app.listen(3000,() => {
     console.log('Server running on http://localhost:3000/')
