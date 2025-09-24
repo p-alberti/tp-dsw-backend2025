@@ -1,4 +1,4 @@
-import { Cascade, Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property } from '@mikro-orm/core'
+import { Cascade, Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property, Rel } from '@mikro-orm/core'
 import { TipoSesion } from '../tipos_sesion/tipos_sesion.entity.js';
 import { Usuario } from '../usuarios/usuarios.entity.js';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
@@ -15,8 +15,7 @@ export class Sesion extends BaseEntity{
     tipo!: TipoSesion
 
     @ManyToOne(() => Usuario, {nullable:false})
-    usuario!: Usuario
+    usuario!: Rel<Usuario>
         
-   
 }
 

@@ -1,11 +1,29 @@
 ### obtener todos los users
 GET http://localhost:3000/api/users
 
+### ID
+@id = {{crearUsuario.response.body.data.id}}
+
 ### obtener un user
-GET http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+GET http://localhost:3000/api/users/{{id}}
 
 ### CREAR un nuevo user
+# @name crearUsuario
 POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+    "nombre": "Adrian",
+    "apellido": "Meca",
+    "dni": 35569423,
+    "fechaNac": "1979-01-27T00:00:00.000Z",
+    "username": "adrianmeca",
+    "contraseña":"12345",
+    "mail":"adrianmeca@gmail.com"
+}
+
+### MODIFICAR un user
+PUT http://localhost:3000/api/users/{{id}}
 Content-Type: application/json
 
 {
@@ -13,23 +31,9 @@ Content-Type: application/json
     "apellido": "Ramirez",
     "dni": 42589642,
     "fechaNac": "1979-01-27T00:00:00.000Z",
-    "username": "lucasramirez",
+    "username": "luquiramirez",
     "contraseña":"67891",
-    "mail":"lucasramirez@gmail.com"
-}
-
-### MODIFICAR un user
-PUT http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
-Content-Type: application/json
-
-{
-    "nombre": "Anabelle",
-    "apellido": "Gomez",
-    "dni": 36548112,
-    "fechaNac": "1974-05-15T00:00:00.000Z",
-    "username": "anagomez",
-    "contraseña":"46595",
-    "mail":"anabellegomez@gmail.com"
+    "mail":"luquiramirez@gmail.com"
 }
 
 ### MODIFICAR un nuevo user parcial
@@ -42,4 +46,4 @@ Content-Type: application/json
 }
 
 ### ELIMINAR un user 
-DELETE http://localhost:3000/api/users/a02b91bc-3769-4221-beb1-d7a3aeba7dad
+DELETE http://localhost:3000/api/users/{{id}}
