@@ -1,29 +1,36 @@
 ### obtener todos las session
 GET http://localhost:3000/api/sessions
 
-### obtener una session
-GET http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad
+### ID
+@id = {{crearSesion.response.body.data.id}}
 
+### obtener una session
+GET http://localhost:3000/api/sessions/{{id}}
 ### CREAR una nueva session
+# @name crearSesion
 POST http://localhost:3000/api/sessions
 Content-Type: application/json
 
 {
- "descripcion": "Nueva session de prueba",
- "fecha": "2024-10-04"
+ "descripcion": "Segunda session de prueba",
+ "fecha": "2024-10-04",
+ "tipo": 1,
+ "usuario": 4
 }
 
 ### MODIFICAR una session
-PUT http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad
+PUT http://localhost:3000/api/sessions/{{id}}
 Content-Type: application/json
 
 {
  "descripcion": "Nueva session de prueba modificada",
- "fecha": "2024-10-05"
+ "fecha": "2024-10-05",
+ "tipo": 2,
+ "usuario": 1
 }
 
 ### MODIFICAR una session parcialmente
-PATCH  http://localhost:3000/api/sessions/a02b26bc-3769-4221-beb1-d7a3cfh7dad 
+PATCH  http://localhost:3000/api/sessions/{{id}}
 Content-Type: application/json
 
 {

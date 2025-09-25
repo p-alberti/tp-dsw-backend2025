@@ -7,7 +7,7 @@ export const orm = await MikroORM.init({
     entitiesTs: ['src/**/*.entity.ts'],
     dbName: 'ftdb',
     driver: MySqlDriver,
-    clientUrl:'mysql://root:153188575@localhost:3306/ftdb',
+    clientUrl:'mysql://root:1234@localhost:3306/ftdb',
     highlighter: new SqlHighlighter(),
     debug: true,
     schemaGenerator:{

@@ -1,43 +1,77 @@
 import {Request, Response, NextFunction} from "express"
 //import { SesionRepositorio } from "./sesiones.repository.js"
 import { Sesion } from "./sesiones.entity.js"
-import { TipoSesion } from "../tipos_sesion/tipos_sesion.entity.js"
+import { orm } from "../shared/db/orm.js"
 
-//const repository = new SesionRepositorio()
+const em = orm.em
 
-// function sanitizeSessionInput(req: Request, res:Response, next: NextFunction){
 
-//     req.body.sanitizedInput = {
-//         descripcion : req.body.descripcion,
-//         fecha : req.body.fecha,
-//         tipo : req.body.tipo
-//     }
-//     Object.keys(req.body.sanitizedInput).forEach(key=> {
-//         if (req.body.sanitizedInput[key] === undefined){
-//             delete req.body.sanitizedInput[key]
-//         }
-//     })
-//     next()
-// }
+
+ function sanitizeSessionInput(req: Request, res:Response, next: NextFunction){
+    req.body.sanitizedInput = {
+        descripcion : req.body.descripcion,
+        fecha : req.body.fecha,
+        tipo : req.body.tipo,
+        usuario: req.body.usuario,
+    }
+    Object.keys(req.body.sanitizedInput).forEach(key=> {
+        if (req.body.sanitizedInput[key] === undefined){
+            delete req.body.sanitizedInput[key]
+        }
+    })
+    next()
+}
 
 async function findAll(req: Request, res: Response){
-    res.status(500).json({message: 'Not implemented'})
+    try {
+        const sesiones = await em.find(Sesion, {})
+        res.status(200).json({message: 'se han encontrado todas las sesiones', data: sesiones})
+    } catch (error: any){
+        res.status(500).json({message: error.message})
+    }
 }
 
 async function findOne(req:Request, res:Response){
-    res.status(500).json({message: 'Not implemented'})
+    try {
+        const id = Number.parseInt(req.params.id)
+        const sesion = await em.findOneOrFail(Sesion, {id})
+        res.status(200).json({message:'se ha encontrado la sesión', data: sesion})
+    } catch (error: any) {
+        res.status(500).json({message: error.message})
+    }
 }
 
 async function add(req: Request, res: Response){
-    res.status(500).json({message: 'Not implemented'})
+    try {
+        const sesion = em.create(Sesion, req.body.sanitizedInput) // esta es una operación sincrónica
+        await em.flush() //es un commit a la bd
+        res.status(201).json({message: 'sesión creada', data: sesion })
+    } catch (error: any){
+        res.status(500).json({message: error.message})
+    }
+}
+async function update(req: Request, res:Response){
+    try{
+        const id = Number.parseInt(req.params.id)
+        const sesion = em.getReference(Sesion, id)
+        em.assign(sesion, req.body.sanitizedInput)
+        await em.flush()
+        res.status(200).json({message: 'se ha modificado la sesion'})
+    } catch (error: any) {
+        res.status(500).json({message: error.message})
+    }
 }
 
-async function update(req: Request, res:Response){
-    res.status(500).json({message: 'Not implemented'})
-}
 
 async function remove(req: Request, res:Response){
-    res.status(500).json({message: 'Not implemented'})
+    try {
+        const id = Number.parseInt(req.params.id)
+        const sesion = em.getReference(Sesion, id)
+        await em.removeAndFlush(sesion) //el remove permite escuchar un evento y no el delete, por eso lo usamos
+        res.status(200).send({message: 'se ha eliminado la sesión'})
+    } catch (error: any) {
+        res.status(500).json({message: error.message})
+    }
 }
 
-export {findAll, findOne, add, update, remove}
+export {sanitizeSessionInput, findAll, findOne, add, update, remove}

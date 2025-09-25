@@ -24,10 +24,10 @@ PUT http://localhost:3000/api/sessionTypes/{{id}}
 Content-Type: application/json
 
 {
-    "nombreTipo" : "Pomodoro Corto",
-    "tiempoFoco": 30,
-    "recreoCorto": 5,
-    "recreoLargo": 20
+    "nombreTipo" : "Pomodoro Largo",
+    "tiempoFoco": 60,
+    "recreoCorto": 10,
+    "recreoLargo": 25
 }
 
 # ### MODIFICAR una session parcialmente
