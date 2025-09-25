@@ -4,6 +4,9 @@ coverage
 # API keys and secrets
 .env
 
+# archivo ORM por problema contraseña
+orm.ts
+
 # dependency directory
 node_modules
 

@@ -13,13 +13,13 @@ POST http://localhost:3000/api/users
 Content-Type: application/json
 
 {
-    "nombre": "Adrian",
-    "apellido": "Meca",
-    "dni": 35569423,
+    "nombre": "Ricardo",
+    "apellido": "Tabaccman",
+    "dni": 35569424,
     "fechaNac": "1979-01-27T00:00:00.000Z",
-    "username": "adrianmeca",
+    "username": "riquitabaccman",
     "contraseña":"12345",
-    "mail":"adrianmeca@gmail.com"
+    "mail":"riqui@gmail.com"
 }
 
 ### MODIFICAR un user
@@ -33,7 +33,7 @@ Content-Type: application/json
     "fechaNac": "1979-01-27T00:00:00.000Z",
     "username": "luquiramirez",
     "contraseña":"67891",
-    "mail":"luquiramirez@gmail.com"
+    "mail":"luqui@gmail.com"
 }
 
 ### MODIFICAR un nuevo user parcial
@@ -46,4 +46,4 @@ Content-Type: application/json
 }
 
 ### ELIMINAR un user 
-DELETE http://localhost:3000/api/users/{{id}}
+DELETE http://localhost:3000/api/users/{{
