@@ -12,7 +12,7 @@ POST http://localhost:3000/api/sessions
 Content-Type: application/json
 
 {
- "descripcion": "Segunda session de prueba",
+ "descripcion": "Segunda sesion de prueba",
  "fecha": "2024-10-04",
  "tipo": 1,
  "usuario": 4
@@ -23,9 +23,9 @@ PUT http://localhost:3000/api/sessions/{{id}}
 Content-Type: application/json
 
 {
- "descripcion": "Nueva session de prueba modificada",
+ "descripcion": "Primera session de prueba modificada",
  "fecha": "2024-10-05",
- "tipo": 2,
+ "tipo": 3,
  "usuario": 1
 }
 

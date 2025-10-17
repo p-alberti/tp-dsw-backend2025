@@ -1,9 +1,10 @@
 import { Request, Response, NextFunction } from "express"
 //import { UsuarioRepositorio } from "./usuarios.repository.js"
+import bcrypt from 'bcryptjs';
 import { orm } from "../shared/db/orm.js"
 import { Usuario } from "./usuarios.entity.js"
 
-const em = orm.em
+const em = orm.em.fork()
 
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
 
@@ -46,7 +47,16 @@ async function findOne(req: Request,res:Response) {
 
 async function add(req: Request,res:Response){
     try {
-        const usuario = em.create(Usuario, req.body.sanitizedInput) // esta es una operación sincrónica
+        const {nombre, apellido, dni, fechaNac, username, contraseña, mail, sesiones} = req.body.sanitizedInput
+        //Verificamos que la contraseña exista antes de intentar hashearla.
+        if (!contraseña){
+            return res.status(400).json({message: 'la contraseña es obligatoria'})
+        }
+        //Hash de la contraseña
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(contraseña, salt);
+
+        const usuario = em.create(Usuario, {nombre, apellido, dni, fechaNac, username, mail, sesiones, contraseña: hashedPassword}) // esta es una operación sincrónica
         await em.flush() //es un commit a la bd
         res.status(201).json({message: 'usuario creado', data: usuario })
     } catch (error: any){
