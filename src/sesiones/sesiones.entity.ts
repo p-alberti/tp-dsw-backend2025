@@ -1,21 +1,21 @@
 import { Cascade, Collection, Entity, ManyToOne, OneToMany, PrimaryKey, Property, Rel } from '@mikro-orm/core'
-import { TipoSesion } from '../tipos_sesion/tipos_sesion.entity.js';
-import { Usuario } from '../usuarios/usuarios.entity.js';
+import { Categoria } from '../categoria/categoria.entity.js';
 import { BaseEntity } from '../shared/db/baseEntity.entity.js';
 
 @Entity()
 export class Sesion extends BaseEntity{
-    @Property()
-    descripcion?: string
 
     @Property({nullable: false})
-    fecha! : Date
+    tiempo_foco! : number
 
-    @ManyToOne(() => TipoSesion, {nullable: false})
-    tipo!: TipoSesion
+    @Property({nullable: false})
+    fecha_hora_creacion! : Date
+    
+    @Property({nullable: true})
+    duracion!: number
 
-    @ManyToOne(() => Usuario, {nullable:false})
-    usuario!: Rel<Usuario>
+    @ManyToOne(() => Categoria, {nullable: false})
+    categoria!: Rel<Categoria>
         
 }
 

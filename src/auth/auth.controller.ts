@@ -8,18 +8,19 @@ const em = orm.em.fork();
 
 export async function login(req: Request, res: Response) {
     try {
+        console.log('BODY LOGIN:', req.body); // 👀 Ver qué llega
         const { mail, contraseña } = req.body;
 
         // 1. Buscar al usuario por su email
         const user = await em.findOne(Usuario, { mail });
         if (!user) {
-            return res.status(401).json({ message: 'Credenciales inválidas' }); // Mensaje genérico por seguridad
+            return res.status(401).json({ message: 'Credenciales inválidas 1' }); // Mensaje genérico por seguridad
         }
 
         // 2. Comparar la contraseña enviada con la hasheada en la BD
         const isMatch = await bcrypt.compare(contraseña, user.contraseña);
         if (!isMatch) {
-            return res.status(401).json({ message: 'Credenciales inválidas' });
+            return res.status(401).json({ message: 'Credenciales inválidas  2' });
         }
 
         // 3. Si todo es correcto, crear el Payload para el token

@@ -2,6 +2,7 @@ import {Request, Response, NextFunction} from "express"
 //import { SesionRepositorio } from "./sesiones.repository.js"
 import { Sesion } from "./sesiones.entity.js"
 import { orm } from "../shared/db/orm.js"
+import { Categoria } from "../categoria/categoria.entity.js"
 
 const em = orm.em
 
@@ -9,10 +10,10 @@ const em = orm.em
 
  function sanitizeSessionInput(req: Request, res:Response, next: NextFunction){
     req.body.sanitizedInput = {
-        descripcion : req.body.descripcion,
-        fecha : req.body.fecha,
-        tipo : req.body.tipo,
-        usuario: req.body.usuario,
+        tiempo_foco : req.body.tiempo_foco,
+        fecha_hora_creacion : req.body.fecha_hora_creacion,
+        duracion : req.body.duracion,
+        categoria : req.body.categoria,
     }
     Object.keys(req.body.sanitizedInput).forEach(key=> {
         if (req.body.sanitizedInput[key] === undefined){

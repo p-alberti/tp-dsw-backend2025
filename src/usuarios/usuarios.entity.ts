@@ -1,5 +1,5 @@
 import { Cascade, Collection, Entity, OneToMany, PrimaryKey, Property } from '@mikro-orm/core'
-import { Sesion } from '../sesiones/sesiones.entity.js'
+import { Categoria } from '../categoria/categoria.entity.js'
 import { BaseEntity } from '../shared/db/baseEntity.entity.js'
 
 @Entity()
@@ -9,9 +9,6 @@ export class Usuario extends BaseEntity{
 
     @Property({nullable: false})
     apellido!: string
-
-    @Property({unique:true})
-    dni?:number
 
     @Property({nullable: false})
     fechaNac!: Date
@@ -25,9 +22,9 @@ export class Usuario extends BaseEntity{
     @Property({nullable: false, unique:true})
     mail!: string
 
-    @OneToMany(() => Sesion, (sesion) => sesion.usuario, {
+    @OneToMany(() => Categoria, (categoria) => categoria.usuario, {
         cascade: [Cascade.ALL],
     })
-    sesiones = new Collection<Sesion>(this) 
+    categorias = new Collection<Categoria>(this) 
     //public tasks: task[], el usurio conoce sus tareas, se crearan mas adelante
 }

@@ -1,16 +1,15 @@
 import {Request, Response, NextFunction} from "express"
-//import { TipoSesionRepositorio } from "./tipos_sesion.repository.js"
-import { TipoSesion } from "./tipos_sesion.entity.js"
+import { Categoria } from "./categoria.entity.js"
 import { orm } from "../shared/db/orm.js"
 
 const em = orm.em
 
 function sanitizeSessionTypeInput(req: Request, res: Response, next: NextFunction){
     req.body.sanitizedInput = {
-        nombreTipo : req.body.nombreTipo,
-        tiempoFoco : req.body.tiempoFoco,
-        recreoCorto : req.body.recreoCorto,
-        recreoLargo : req.body.recreoLargo,
+        nombre_categoria : req.body.nombre_categoria,
+        descripcion : req.body.descripcion,
+        color : req.body.color,
+        usuario : req.body.usuario,
         sesiones : req.body.sesiones,
     }
     Object.keys(req.body.sanitizedInput).forEach(key => {
@@ -23,8 +22,8 @@ function sanitizeSessionTypeInput(req: Request, res: Response, next: NextFunctio
 
 async function findAll(req: Request, res: Response){
     try {
-        const tiposSesion = await em.find(TipoSesion, {}, {populate: ['sesiones']})
-        res.status(200).json({message: 'se han encontrado todos los tipos de sesión', data: tiposSesion})
+        const categorias = await em.find(Categoria, {}, {populate: ['sesiones']})
+        res.status(200).json({message: 'se han encontrado todas las Categorias', data: categorias})
     } catch (error: any){
         res.status(500).json({message: error.message})
     }
@@ -33,8 +32,8 @@ async function findAll(req: Request, res: Response){
 async function findOne(req:Request, res:Response){
     try {
         const id = Number.parseInt(req.params.id)
-        const tipoSesion = await em.findOneOrFail(TipoSesion, {id}, {populate: ['sesiones']})
-        res.status(200).json({message:'se ha encontrado el tipo de sesión', data: tipoSesion})
+        const categoria = await em.findOneOrFail(Categoria, {id}, {populate: ['sesiones']})
+        res.status(200).json({message:'se ha encontrado la Categoría', data: categoria})
     } catch (error: any) {
         res.status(500).json({message: error.message})
     }
@@ -42,9 +41,9 @@ async function findOne(req:Request, res:Response){
 
 async function add(req: Request, res: Response){
     try {
-        const tipoSesion = em.create(TipoSesion, req.body.sanitizedInput) // esta es una operación sincrónica
+        const categoria = em.create(Categoria, req.body.sanitizedInput) // esta es una operación sincrónica
         await em.flush() //es un commit a la bd
-        res.status(201).json({message: 'tipo de sesión creado', data: tipoSesion })
+        res.status(201).json({message: 'Categoría creada', data: categoria })
     } catch (error: any){
         res.status(500).json({message: error.message})
     }
@@ -53,10 +52,10 @@ async function add(req: Request, res: Response){
 async function update(req: Request, res:Response){
     try{
         const id = Number.parseInt(req.params.id)
-        const tipoSesion = em.getReference(TipoSesion, id)
-        em.assign(tipoSesion, req.body.sanitizedInput)
+        const categoria = em.getReference(Categoria, id)
+        em.assign(categoria, req.body.sanitizedInput)
         await em.flush()
-        res.status(200).json({message: 'se ha modificado el tipo de sesión'})
+        res.status(200).json({message: 'se ha modificado la Categoría'})
     } catch (error: any) {
         res.status(500).json({message: error.message})
     }
@@ -65,9 +64,9 @@ async function update(req: Request, res:Response){
 async function remove(req: Request, res:Response){
     try {
         const id = Number.parseInt(req.params.id)
-        const tipoSesion = em.getReference(TipoSesion, id)
-        await em.removeAndFlush(tipoSesion) //el remove permite escuchar un evento y no el delete, por eso lo usamos
-        res.status(200).send({message: 'se ha eliminado el tipo de sesión'})
+        const categoria = em.getReference(Categoria, id)
+        await em.removeAndFlush(categoria) //el remove permite escuchar un evento y no el delete, por eso lo usamos
+        res.status(200).send({message: 'se ha eliminado la Categoría'})
     } catch (error: any) {
         res.status(500).json({message: error.message})
     }

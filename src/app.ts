@@ -2,8 +2,8 @@ import 'reflect-metadata'
 import express from 'express' 
 import cors from 'cors';
 import { usuarioRouter } from './usuarios/usuarios.routes.js'
+import { categoriaRouter } from './categoria/categoria.routes.js'
 import { sesionRouter } from './sesiones/sesiones.routes.js'
-import { tipoSesionRouter } from './tipos_sesion/tipos_sesion.routes.js'
 import { orm, syncSchema } from './shared/db/orm.js'
 import { RequestContext } from '@mikro-orm/core'
 import 'dotenv/config'
@@ -23,8 +23,8 @@ app.use((req, res, next) => {
 //antes de las rutas y middlewares de negocio
 
 app.use('/api/users', usuarioRouter)
+app.use('/api/categories', categoriaRouter)
 app.use('/api/sessions', sesionRouter)
-app.use('/api/sessionTypes', tipoSesionRouter)
 app.use('/api', authRouter)
 
 app.use((_, res)=>{
