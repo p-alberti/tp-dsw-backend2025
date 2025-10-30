@@ -4,6 +4,7 @@ import cors from 'cors';
 import { usuarioRouter } from './usuarios/usuarios.routes.js'
 import { categoriaRouter } from './categoria/categoria.routes.js'
 import { sesionRouter } from './sesiones/sesiones.routes.js'
+import { tareaRouter } from './tareas/tarea.routes.js';
 import { orm, syncSchema } from './shared/db/orm.js'
 import { RequestContext } from '@mikro-orm/core'
 import 'dotenv/config'
@@ -25,6 +26,7 @@ app.use((req, res, next) => {
 app.use('/api/users', usuarioRouter)
 app.use('/api/categories', categoriaRouter)
 app.use('/api/sessions', sesionRouter)
+app.use('/api/tasks', tareaRouter)
 app.use('/api', authRouter)
 
 app.use((_, res)=>{
