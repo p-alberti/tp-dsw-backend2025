@@ -4,7 +4,6 @@ import bcrypt from 'bcryptjs';
 import { orm } from "../shared/db/orm.js"
 import { Usuario } from "./usuarios.entity.js"
 
-const em = orm.em.fork()
 
 function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
 
@@ -27,6 +26,7 @@ function sanitizeUserInput(req: Request, res: Response, next: NextFunction){
 
 async function findAll(req: Request,res: Response){
     try {
+        const em = orm.em.fork()
         const usuarios = await em.find(Usuario, {}, {populate: ['categorias']})
         res.status(200).json({message: 'se han encontrado todos los usuarios', data: usuarios})
     } catch (error: any){
@@ -36,6 +36,7 @@ async function findAll(req: Request,res: Response){
 
 async function findOne(req: Request,res:Response) {
     try {
+        const em = orm.em.fork()
         const id = Number.parseInt(req.params.id)
         const usuario = await em.findOneOrFail(Usuario, {id}, {populate: ['categorias']})
         res.status(200).json({message:'se ha encontrado el usuario', data: usuario})
@@ -46,6 +47,7 @@ async function findOne(req: Request,res:Response) {
 
 async function add(req: Request,res:Response){
     try {
+        const em = orm.em.fork()
         const {nombre, apellido, fechaNac, username, contraseña, mail, categorias} = req.body.sanitizedInput
         //Verificamos que la contraseña exista antes de intentar hashearla.
         if (!contraseña){
@@ -65,6 +67,7 @@ async function add(req: Request,res:Response){
 
 async function update(req: Request,res:Response){
     try{
+        const em = orm.em.fork()
         const id = Number.parseInt(req.params.id)
         const usuario = em.getReference(Usuario, id)
         em.assign(usuario, req.body.sanitizedInput)
@@ -77,6 +80,7 @@ async function update(req: Request,res:Response){
 
 async function remove(req: Request,res:Response) {
     try {
+        const em = orm.em.fork()
         const id = Number.parseInt(req.params.id)
         const usuario = em.getReference(Usuario, id)
         await em.removeAndFlush(usuario) //el remove permite escuchar un evento y no el delete, por eso lo usamos
@@ -86,15 +90,20 @@ async function remove(req: Request,res:Response) {
     }
 }
 
+/* FUNCIONES ACCESIBLES SOLO POR EL USUARIO */
+
 async function getProfile(req: Request, res: Response) {
   try {
+    const em = orm.em.fork()
     const userId = (req as any).user.userId; // viene del token
     const usuario = await em.findOne(Usuario, { id: userId }, { populate: ["categorias"] });
+
 
     if (!usuario) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
+    console.log("datos usuario desde back getprofile", usuario)
     res.status(200).json(usuario);
   } catch (error: any) {
     res.status(500).json({ message: error.message });
@@ -103,6 +112,7 @@ async function getProfile(req: Request, res: Response) {
 
 async function updateProfile(req: Request, res: Response) {
   try {
+    const em = orm.em.fork()
     const userId = (req as any).user.userId;
     const usuario = await em.findOneOrFail(Usuario, { id: userId });
 
