@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { verifyToken } from "../auth/auth.middleware.js";
-import { sanitizeTareaInput, findAll, findOne, add, update, remove} from "./tarea.controller.js"
+import { sanitizeTareaInput, findAll, findOne, add, update, remove, findMyTareas} from "./tarea.controller.js"
 
 export const tareaRouter = Router()
+
+tareaRouter.get('/mis-tareas', verifyToken, findMyTareas)
 
 tareaRouter.get('/', findAll)
 tareaRouter.get('/:id', findOne)

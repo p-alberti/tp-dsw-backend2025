@@ -9,7 +9,7 @@ function sanitizeTareaInput(req: Request, res: Response, next: NextFunction){
         nombre: req.body.nombre,
         descripcion : req.body.descripcion,
         usuario : req.body.usuario,
-        /*estados : req.body.estados,*/
+        estado : req.body.estado
     }
     Object.keys(req.body.sanitizedInput).forEach(key => {
         if(req.body.sanitizedInput[key] === undefined){
@@ -114,4 +114,25 @@ async function remove(req: Request, res:Response){
     }
 }
 
-export {sanitizeTareaInput, findAll, findOne, add, update, remove}
+
+// ---------- Funciones accesibles por el usuario ----------
+
+async function findMyTareas(req: Request, res: Response) {
+  try {
+    // Tu middleware 'verifyToken' ya nos da el usuario en req.user
+    const userId = (req as any).user.userId; 
+
+    if (!userId) {
+      return res.status(401).json({ message: 'No autorizado: Usuario no identificado' });
+    }
+
+    // Buscamos en la BD todas las tareas donde el 'usuario' coincida con el ID del token
+    const tareas = await em.find(Tarea, { usuario: userId });
+    
+    res.status(200).json({ message: 'Tareas del usuario encontradas', data: tareas });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
+export {sanitizeTareaInput, findAll, findOne, add, update, remove, findMyTareas}
