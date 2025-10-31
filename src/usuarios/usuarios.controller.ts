@@ -49,17 +49,19 @@ async function add(req: Request,res:Response){
     try {
         const em = orm.em.fork()
         const {nombre, apellido, fechaNac, username, contraseña, mail, categorias} = req.body.sanitizedInput
-        //Verificamos que la contraseña exista antes de intentar hashearla.
+        //verificamos que haya contraseña
         if (!contraseña){
             return res.status(400).json({message: 'la contraseña es obligatoria'})
         }
-        //Hash de la contraseña
+
+        //hasheo de la contraseña
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(contraseña, salt);
 
         const usuario = em.create(Usuario, {nombre, apellido, fechaNac, username, mail, categorias, contraseña: hashedPassword}) // esta es una operación sincrónica
         await em.flush() //es un commit a la bd
         res.status(201).json({message: 'usuario creado', data: usuario })
+
     } catch (error: any){
         res.status(500).json({message: error.message})
     }
@@ -116,7 +118,7 @@ async function updateProfile(req: Request, res: Response) {
     const userId = (req as any).user.userId;
     const usuario = await em.findOneOrFail(Usuario, { id: userId });
 
-    // Si el usuario envía contraseña nueva, la hasheamos
+    //validamos que la contraseña que venga no este ya hasheada
     let updatedData = req.body;
     if (updatedData.contraseña && !updatedData.contraseña.startsWith('$2b$')) {
       const salt = await bcrypt.genSalt(10);

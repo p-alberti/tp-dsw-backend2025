@@ -31,7 +31,7 @@ app.use('/api', authRouter)
 
 app.use((_, res)=>{
     return res.status(404).send({message: 'Resource Not Found'})
-}) //Para manejar urls que no tenemos definidas como por ejemplo si se equivocan en algun caracter del getall ej: /api/usersss
+}) //para manejar urls que no tenemos definidas como por ejemplo si se equivocan en algun caracter del getall ej: /api/usersss
 
 await syncSchema() // never in production
 

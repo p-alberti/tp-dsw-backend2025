@@ -44,7 +44,7 @@ async function findOne(req:Request, res:Response){
 
 async function add(req: Request, res: Response){
     try {
-        const sesion = em.create(Sesion, req.body.sanitizedInput) // esta es una operación sincrónica
+        const sesion = em.create(Sesion, req.body.sanitizedInput) 
         await em.flush() //es un commit a la bd
         res.status(201).json({message: 'sesión creada', data: sesion })
     } catch (error: any){

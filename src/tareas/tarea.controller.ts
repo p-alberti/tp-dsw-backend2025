@@ -49,13 +49,14 @@ async function add(req: Request, res: Response){
         if (!userId) {
           return res.status(401).json({ message: 'No autorizado: Usuario no identificado' });
         }
-        // CAMBIAR: Asignamos el ID del usuario de forma segura al objeto que se va a guardar.
+        //asignamos el id del usuario a la tarea
         req.body.sanitizedInput = req.body.sanitizedInput || {};
         req.body.sanitizedInput.usuario = userId;
 
-        const tarea = em.create(Tarea, req.body.sanitizedInput) // esta es una operación sincrónica
+        const tarea = em.create(Tarea, req.body.sanitizedInput) 
         await em.flush() //es un commit a la bd
         res.status(201).json({message: 'Tarea creada', data: tarea })
+
     } catch (error: any){
         res.status(500).json({message: error.message})
     }
@@ -67,19 +68,19 @@ async function update(req: Request, res:Response){
         const userObj = (req as any).user;
         const userId = userObj.userId ?? userObj.id;
 
-        // 1. Buscamos la tarea que se quiere modificar
+        //buscamos tarea a modificar
         const tareaToUpdate = await em.findOne(Tarea, { id }/*, { populate: ['estados'] }*/);
 
         if (!tareaToUpdate) {
             return res.status(404).json({ message: 'Tarea no encontrada' });
         }
 
-        // 2. Verificamos que el usuario de la tarea sea el mismo que el del token
+        //verificar que el usuario sea propietario de la tarea
         if (tareaToUpdate.usuario.id !== userId) {
             return res.status(403).json({ message: 'Acción no autorizada: No eres el propietario de esta tarea' });
         }
 
-        // 3. Si la verificación es exitosa, aplicamos los cambios
+        //actualizamos la tarea
         em.assign(tareaToUpdate, req.body.sanitizedInput)
         await em.flush()
         res.status(200).json({message: 'Categoría modificada con éxito', data: tareaToUpdate})
@@ -94,19 +95,19 @@ async function remove(req: Request, res:Response){
         const userObj = (req as any).user;
         const userId = userObj.userId ?? userObj.id;
 
-        // 1. Buscamos la tarea que se quiere eliminar
+        //buscamos tarea a eliminar
         const tareaToRemove = await em.findOne(Tarea, { id }/*, { populate: ['estados'] }*/);
 
         if (!tareaToRemove) {
             return res.status(404).json({ message: 'Tarea no encontrada' });
         }
 
-        // 2. Verificamos la propiedad
+        //verificamos que pertenezca al usuario
         if (tareaToRemove.usuario.id !== userId) {
             return res.status(403).json({ message: 'Acción no autorizada' });
         }
         
-        // 3. Si es el dueño, la eliminamos
+        //la eliminamos
         await em.removeAndFlush(tareaToRemove)
         res.status(200).json({message: 'Tarea eliminada con éxito'})
     } catch (error: any) {
@@ -119,14 +120,14 @@ async function remove(req: Request, res:Response){
 
 async function findMyTareas(req: Request, res: Response) {
   try {
-    // Tu middleware 'verifyToken' ya nos da el usuario en req.user
+    //el middleware nos da el usuario en req
     const userId = (req as any).user.userId; 
 
     if (!userId) {
       return res.status(401).json({ message: 'No autorizado: Usuario no identificado' });
     }
 
-    // Buscamos en la BD todas las tareas donde el 'usuario' coincida con el ID del token
+    //buscamos en bd las tareas con id de usuario que llama la funcion
     const tareas = await em.find(Tarea, { usuario: userId });
     
     res.status(200).json({ message: 'Tareas del usuario encontradas', data: tareas });
