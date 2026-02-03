@@ -118,12 +118,7 @@ async function updateProfile(req: Request, res: Response) {
     const userId = (req as any).user.userId;
     const usuario = await em.findOneOrFail(Usuario, { id: userId });
 
-    //validamos que la contraseña que venga no este ya hasheada
-    let updatedData = req.body;
-    if (updatedData.contraseña && !updatedData.contraseña.startsWith('$2b$')) {
-      const salt = await bcrypt.genSalt(10);
-      updatedData.contraseña = await bcrypt.hash(updatedData.contraseña, salt);
-    }
+    const {contraseña, ...updatedData} = req.body;
 
     em.assign(usuario, updatedData);
     await em.flush();
@@ -133,5 +128,42 @@ async function updateProfile(req: Request, res: Response) {
     res.status(500).json({ message: error.message });
   }
 }
+
+
+export async function changePassword(req: Request, res: Response) {
+  try {
+    const em = orm.em.fork();
+    const userId = (req as any).user.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    // 1. Validar que se recibieron ambas contraseñas
+    if (!currentPassword || !newPassword) {
+      return res
+        .status(400)
+        .json({ message: 'Se requieren la contraseña actual y la nueva.' });
+    }
+
+    const usuario = await em.findOneOrFail(Usuario, { id: userId });
+
+    // 2. Verificar que la contraseña actual es correcta
+    const isMatch = await bcrypt.compare(currentPassword, usuario.contraseña);
+    if (!isMatch) {
+      return res
+        .status(401)
+        .json({ message: 'La contraseña actual es incorrecta.' });
+    }
+
+    // 3. Hashear y guardar la nueva contraseña
+    const salt = await bcrypt.genSalt(10);
+    usuario.contraseña = await bcrypt.hash(newPassword, salt);
+
+    await em.flush();
+
+    res.status(200).json({ message: 'Contraseña actualizada con éxito.' });
+  } catch (error: any) {
+    res.status(500).json({ message: error.message });
+  }
+}
+
 
 export {sanitizeUserInput, findAll, findOne, add, update, remove, getProfile, updateProfile}

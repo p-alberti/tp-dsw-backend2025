@@ -1,6 +1,6 @@
 import { Router } from "express";
 
-import {sanitizeUserInput, findAll, findOne, add, update, remove, getProfile, updateProfile } from "./usuarios.controller.js";
+import {sanitizeUserInput, findAll, findOne, add, update, remove, getProfile, updateProfile, changePassword } from "./usuarios.controller.js";
 import { verifyToken } from "../auth/auth.middleware.js";
 
 export const usuarioRouter = Router()
@@ -8,6 +8,7 @@ export const usuarioRouter = Router()
 // Rutas protegidas (requieren JWT)
 usuarioRouter.get("/perfil/me", verifyToken, getProfile);
 usuarioRouter.put("/perfil/update", verifyToken, updateProfile);
+usuarioRouter.put("/perfil/changePassword", verifyToken, changePassword);
 
 usuarioRouter.get('/', findAll)
 usuarioRouter.get('/:id', findOne)
