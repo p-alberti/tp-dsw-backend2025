@@ -6,16 +6,13 @@ import { BaseEntity } from '../shared/db/baseEntity.entity.js'
 export class Tarea extends BaseEntity{
     @Property({nullable: false})
     nombre!: string
-
-    @Property({nullable: true})
-    descripcion!: string
-    /*
+    
     @Property({nullable: false})
     fecha_creacion!: Date
 
-    @Property({nullable: false})
+    @Property({nullable: true})
     fecha_finalizacion!: Date
-    */
+    
 
     @ManyToOne(() => Usuario, {nullable: false})
     usuario!: Rel<Usuario>

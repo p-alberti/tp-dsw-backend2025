@@ -7,7 +7,6 @@ const em = orm.em
 function sanitizeTareaInput(req: Request, res: Response, next: NextFunction){
     req.body.sanitizedInput = {
         nombre: req.body.nombre,
-        descripcion : req.body.descripcion,
         usuario : req.body.usuario,
         estado : req.body.estado
     }
@@ -53,6 +52,9 @@ async function add(req: Request, res: Response){
         req.body.sanitizedInput = req.body.sanitizedInput || {};
         req.body.sanitizedInput.usuario = userId;
 
+        req.body.sanitizedInput.fecha_creacion = new Date();
+        req.body.sanitizedInput.fecha_finalizacion = null;
+
         const tarea = em.create(Tarea, req.body.sanitizedInput) 
         await em.flush() //es un commit a la bd
         res.status(201).json({message: 'Tarea creada', data: tarea })
@@ -78,6 +80,15 @@ async function update(req: Request, res:Response){
         //verificar que el usuario sea propietario de la tarea
         if (tareaToUpdate.usuario.id !== userId) {
             return res.status(403).json({ message: 'Acción no autorizada: No eres el propietario de esta tarea' });
+        }
+
+        const input = req.body.sanitizedInput;
+        if (input.estado === 'Completada' && tareaToUpdate.estado !== 'Completada') {
+            input.fecha_finalizacion = new Date();
+        } 
+        // Opcional: Si la tarea se "reabre" despues deberiamos ver de sacar esta opcion
+        else if (input.estado !== 'Completada' && tareaToUpdate.estado === 'Completada') {
+            input.fecha_finalizacion = null;
         }
 
         //actualizamos la tarea

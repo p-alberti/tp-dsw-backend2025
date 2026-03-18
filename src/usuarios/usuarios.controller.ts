@@ -98,7 +98,7 @@ async function getProfile(req: Request, res: Response) {
   try {
     const em = orm.em.fork()
     const userId = (req as any).user.userId; // viene del token
-    const usuario = await em.findOne(Usuario, { id: userId }, { populate: ["categorias"] });
+    const usuario = await em.findOne(Usuario, { id: userId }, { populate: ["categorias", "categorias.sesiones", "tareas"] },);
 
 
     if (!usuario) {
